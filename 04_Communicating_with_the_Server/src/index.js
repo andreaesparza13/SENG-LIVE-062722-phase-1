@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+// document.addEventListener('DOMContentLoaded', () => {
 
 // Render Functions
     // Renders Header
@@ -58,4 +58,4 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#book-form').addEventListener('submit', handleForm)
 
 
-})
+// })
