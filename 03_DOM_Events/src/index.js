@@ -1,18 +1,49 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    document.querySelector('h1').addEventListener('click', e => console.log(e.target))
-    renderHeader(secondBookStore)
-    renderFooter(bookStore)
+    // Function to populate page from the start
+    function loadPage(store) {
+        renderHeader(store)
+        renderFooter(store)
+        renderBookList(store)
+    }
 
-    // bookStore.inventory.forEach(bookCard => renderBookCard(bookCard))
-    bookStore.inventory.forEach(renderBookCard)
+    // Initial Page Load with Store 1
+    loadPage(bookStore)
+
+    function renderBookList(store) {
+        // store.inventory.forEach(bookCard => renderBookCard(bookCard))
+        store.inventory.forEach(renderBookCard)
+    }
+    
+    function clearBookList() {
+        document.querySelectorAll('li').forEach(li => li.remove())
+    }
+    
+    let toggleSwitch = false
+
+    function switchStore() {
+        toggleSwitch = !toggleSwitch
+        if (!toggleSwitch) {
+            clearBookList()
+            loadPage(secondBookStore)
+        } else {
+            clearBookList()
+            loadPage(bookStore)
+        }
+    }
+
+    // Activate switch toggle button
+    document.querySelector("#switch-btn").addEventListener("click", switchStore)
+
+    // Form Submit Button Handling
     document.querySelector("#book-form").addEventListener("submit", e => handleForm(e))
 
     // Renders Header
     function renderHeader(store){
         document.querySelector('h1').textContent = store.name
     }
+
     // Renders Footer
     function renderFooter(store){
         const footerDivs = document.querySelectorAll('footer div')
@@ -62,12 +93,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Final step to add the newly created card
         renderBookCard(book)
-    }
-
-    // Creating new book store
-    function createStore(storeData) {
-        storeData = {
-
-        }
     }
 })
