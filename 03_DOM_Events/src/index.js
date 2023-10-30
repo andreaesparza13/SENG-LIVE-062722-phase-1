@@ -1,20 +1,24 @@
-document.addEventListener("DOMContentLoaded", () => {
-    renderHeader()
-    renderFooter()
-    bookStore.inventory.forEach(renderBookCard)
-    document.querySelector('#book-form').addEventListener('submit', handleForm)
 
+document.addEventListener("DOMContentLoaded", () => {
+
+    document.querySelector('h1').addEventListener('click', e => console.log(e.target))
+    renderHeader(secondBookStore)
+    renderFooter(bookStore)
+
+    // bookStore.inventory.forEach(bookCard => renderBookCard(bookCard))
+    bookStore.inventory.forEach(renderBookCard)
+    document.querySelector("#book-form").addEventListener("submit", e => handleForm(e))
 
     // Renders Header
-    function renderHeader(){
-        document.querySelector('h1').textContent = bookStore.name
+    function renderHeader(store){
+        document.querySelector('h1').textContent = store.name
     }
     // Renders Footer
-    function renderFooter(){
+    function renderFooter(store){
         const footerDivs = document.querySelectorAll('footer div')
-        footerDivs[0].textContent = bookStore.name
-        footerDivs[1].textContent = bookStore.address
-        footerDivs[2].textContent = bookStore.hours
+        footerDivs[0].textContent = store.name
+        footerDivs[1].textContent = store.address
+        footerDivs[2].textContent = store.hours
     }
 
     function renderBookCard(cardData) {
@@ -29,8 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
         pAuthor.textContent = cardData.author
         pPrice.textContent = `$${cardData.price}`
         btn.textContent = 'Delete'
-        btn.addEventListener('click', () => li.remove()) // ORRRR e.target.parentElement.remove()
-            
+        // btn.addEventListener('click', e => e.target.parentElement.remove())
+        btn.addEventListener('click', () => li.remove())
 
         img.src = cardData.imageUrl
         li.className = 'list-li'
@@ -42,8 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function handleForm(e) {
         e.preventDefault()
 
-        //Build book object
-        const bookObj = {
+        // Build book object
+        const book = {
             id: bookStore.inventory.length + 1,
             title: e.target.title.value,
             author: e.target.author.value,
@@ -52,8 +56,18 @@ document.addEventListener("DOMContentLoaded", () => {
             inventory: e.target.inventory.value,
             imageUrl: e.target.imageUrl.value
         }
-        bookStore.inventory.push(bookObj)
-        renderBookCard(bookObj)
-        
+
+        // Add book to inventory list
+        bookStore.inventory.push(book)
+
+        // Final step to add the newly created card
+        renderBookCard(book)
+    }
+
+    // Creating new book store
+    function createStore(storeData) {
+        storeData = {
+
+        }
     }
 })
