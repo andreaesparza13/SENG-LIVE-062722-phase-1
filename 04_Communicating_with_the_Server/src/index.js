@@ -1,5 +1,28 @@
-// document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const storeMenu = document.createElement("ul")
+    storeMenu.className = "store-menu"
 
+    let storeList = []
+
+    function fetchAllStores() {
+        fetch('http://localhost:3000/stores')
+        .then(res => res.json())
+        .then(store => storeList.push(store))
+    }
+    fetchAllStores()
+
+    function fetchEachStore(id){
+        // Fetch Request
+        // Creates a "promise"
+        fetch(`http://localhost:3000/stores/${id}`)
+        // Once promise is resolved...
+        .then(res => res.json())  // this method parses json into JavaScript
+        .then(store => {
+            renderHeader(store)
+            renderFooter(store)
+        })
+    }
 // Render Functions
     // Renders Header
     function renderHeader(store){
@@ -58,4 +81,4 @@
     document.querySelector('#book-form').addEventListener('submit', handleForm)
 
 
-// })
+})
